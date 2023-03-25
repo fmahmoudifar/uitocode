@@ -111,7 +111,7 @@ function create() {
                                     });
                                     const button = buttonHTML.join("\n");
 
-                                    fs.appendFile(component, `\n ${button}`, function (err) {
+                                    fs.appendFile(htmlComponent, `\n ${button}`, function (err) {
                                         // fs.appendFile(appComponent, `<a src="/src/app/${name}/${name}.component.html">${name}</a>`.toLowerCase(), function (err) {
                                         if (err) throw err;
                                         console.log(`A button added`);
@@ -129,12 +129,12 @@ function create() {
 
                                         return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; ${fontStyle}; border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}}`;
                                     });
-                                    const bCSS = buttonHTML.join("\n");
+                                    const cssbutton = buttonCSS.join("\n");
 
-                                    fs.appendFile(component, `\n ${bCSS}`, function (err) {
+                                    fs.appendFile(cssComponent, `\n ${cssbutton}`, function (err) {
                                         // fs.appendFile(appComponent, `<a src="/src/app/${name}/${name}.component.html">${name}</a>`.toLowerCase(), function (err) {
                                         if (err) throw err;
-                                        console.log(`A button added`);
+                                        console.log(`button style added`);
                                     });
 
 
@@ -146,6 +146,27 @@ function create() {
                                     // const buttonStyles = buttons.map(button => button.$.style);
 
                                     const textboxHTML = textboxes.map(textbox => {
+                                        // const style = textbox.$.style;
+                                        const id = textbox.$.id;
+                                        const value = textbox.$.value;
+                                        // const geometry = textbox.mxGeometry[0].$;
+                                        // const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
+                                        // const buttonStyle = style.buttonStyle === "round" ? "border-radius: 15px" : "";
+                                        // const dashed = style.dashed === "0" ? "border-style: solid" : "";
+                                        // const fontStyle = style.fontStyle === "1" ? "font-style: normal" : "";
+
+                                        // return `<button id="${id}" style="border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; ${fontStyle}; border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}">${value}</button>`;
+                                        return `<input id="${id}" type="text" placeholder="${value}">`;
+                                    });
+                                    const textbox = textboxHTML.join("\n");
+
+                                    fs.appendFile(htmlComponent, `\n ${textbox}`, function (err) {
+                                        // fs.appendFile(appComponent, `<a src="/src/app/${name}/${name}.component.html">${name}</a>`.toLowerCase(), function (err) {
+                                        if (err) throw err;
+                                        console.log(`A textbox added`);
+                                    });
+
+                                    const textboxCSS = textboxes.map(textbox => {
                                         const style = textbox.$.style;
                                         const id = textbox.$.id;
                                         const value = textbox.$.value;
@@ -156,15 +177,16 @@ function create() {
                                         // const fontStyle = style.fontStyle === "1" ? "font-style: normal" : "";
 
                                         // return `<button id="${id}" style="border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; ${fontStyle}; border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}">${value}</button>`;
-                                        return `<input id="${id}" type="text" value="${value}" style="border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;">`;
+                                        return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
                                     });
-                                    const textbox = textboxHTML.join("\n");
+                                    const textCSS = textboxCSS.join("\n");
 
-                                    fs.appendFile(component, `\n ${textbox}`, function (err) {
+                                    fs.appendFile(cssComponent, `\n ${textCSS}`, function (err) {
                                         // fs.appendFile(appComponent, `<a src="/src/app/${name}/${name}.component.html">${name}</a>`.toLowerCase(), function (err) {
                                         if (err) throw err;
-                                        console.log(`A textbox added`);
+                                        console.log(`textbox style added`);
                                     });
+
                                     break;
                                 case "ellipse":
                                     const radios = diagram.mxGraphModel[0].root[0].mxCell.filter(cell => cell.$.style && cell.$.style.shape === "ellipse");
@@ -179,20 +201,45 @@ function create() {
                                         const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
                                         var x = parseInt(`${geometry.x}`) + 25;
                                         // const buttonStyle = style.buttonStyle === "round" ? "border-radius: 15px" : "";
+                                        // const dashed = style.dashed === "0" ? "border-style: solid" : "";
+                                        // const fontStyle = style.fontStyle === "1" ? "font-style: normal" : "";
+
+                                        // return `<button id="${id}" style="border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; ${fontStyle}; border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}">${value}</button>`;
+                                        // return `<input id="${id}" type="text" value="${value}" style="border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;">`;
+                                        return `<input type="radio" name="${value}" id="${id}" value="${value}">
+                                        <label for="${id}" id="${id}label">${value}</label>`
+                                    });
+                                    const radio = radioHTML.join("\n");
+
+                                    fs.appendFile(htmlComponent, `\n ${radio}`, function (err) {
+                                        // fs.appendFile(appComponent, `<a src="/src/app/${name}/${name}.component.html">${name}</a>`.toLowerCase(), function (err) {
+                                        if (err) throw err;
+                                        console.log(`A radio button added`);
+                                    });
+
+                                    const radioCSS = radios.map(radio => {
+                                        const style = radio.$.style;
+                                        const id = radio.$.id;
+                                        const value = radio.$.value;
+                                        const geometry = radio.mxGeometry[0].$;
+                                        const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
+                                        var x = parseInt(`${geometry.x}`) + 25;
+                                        // const buttonStyle = style.buttonStyle === "round" ? "border-radius: 15px" : "";
                                         const dashed = style.dashed === "0" ? "border-style: solid" : "";
                                         // const fontStyle = style.fontStyle === "1" ? "font-style: normal" : "";
 
                                         // return `<button id="${id}" style="border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; ${fontStyle}; border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}">${value}</button>`;
                                         // return `<input id="${id}" type="text" value="${value}" style="border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;">`;
-                                        return `<input type="radio" name="${value}" id="${id}" value="${value}" style="${position} background-color: ${style.fillColor}; ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;">
-                    <label for="NxeJCdvBE4MFut9FiqpC-1" style="position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor};">${value}</label>`
-                                    });
-                                    const radio = radioHTML.join("\n");
+                                        return `#${id} {background-color: ${style.fillColor}; ${position} ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;}
+                                        #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor};}`
 
-                                    fs.appendFile(component, `\n ${radio}`, function (err) {
+                                    });
+                                    const cssradio = radioCSS.join("\n");
+
+                                    fs.appendFile(cssComponent, `\n ${cssradio}`, function (err) {
                                         // fs.appendFile(appComponent, `<a src="/src/app/${name}/${name}.component.html">${name}</a>`.toLowerCase(), function (err) {
                                         if (err) throw err;
-                                        console.log(`A radio button added`);
+                                        console.log(`radio button style added`);
                                     });
                                     break;
                                 case "mxgraph.mockup.forms.comboBox":
@@ -215,18 +262,43 @@ function create() {
                                         // return `<input id="${id}" type="text" value="${value}" style="border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;">`;
                                         // return `<input type="" name="${value}" id="${id}" value="${value}" style="${position} background-color: ${style.fillColor}; ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;">
                                         // <label for="NxeJCdvBE4MFut9FiqpC-1" style="position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor};">${value}</label>`
-                                        return `<select id="${id}" style="${position} background-color: ${style.fillColor}; border-width: ${style.strokeWidth}px; ${dashed}; border-color: ${style.strokeColor}; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; padding-left: ${style.spacingLeft}px; ">
-                    <option value="${value}">${value}</option>
-                    </select>`;
-
+                                        return `<select id="${id}">
+                                        <option value="${value}">${value}</option>
+                                        </select>`;
                                     });
                                     const combo = comboHTML.join("\n");
 
-                                    fs.appendFile(component, `\n ${combo}`, function (err) {
+                                    fs.appendFile(htmlComponent, `\n ${combo}`, function (err) {
                                         // fs.appendFile(appComponent, `<a src="/src/app/${name}/${name}.component.html">${name}</a>`.toLowerCase(), function (err) {
                                         if (err) throw err;
                                         console.log(`A comboBox added`);
                                     });
+
+                                    const comboCSS = combos.map(combo => {
+                                        const style = combo.$.style;
+                                        const id = combo.$.id;
+                                        const value = combo.$.value;
+                                        const geometry = combo.mxGeometry[0].$;
+                                        const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
+                                        var x = parseInt(`${geometry.x}`) + 25;
+                                        // const buttonStyle = style.buttonStyle === "round" ? "border-radius: 15px" : "";
+                                        const dashed = style.dashed === "0" ? "border-style: solid" : "";
+                                        // const fontStyle = style.fontStyle === "1" ? "font-style: normal" : "";
+
+                                        // return `<button id="${id}" style="border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; ${fontStyle}; border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}">${value}</button>`;
+                                        // return `<input id="${id}" type="text" value="${value}" style="border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;">`;
+                                        // return `<input type="" name="${value}" id="${id}" value="${value}" style="${position} background-color: ${style.fillColor}; ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;">
+                                        // <label for="NxeJCdvBE4MFut9FiqpC-1" style="position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor};">${value}</label>`
+                                        return `#${id} {${position} background-color: ${style.fillColor}; border-width: ${style.strokeWidth}px; ${dashed}; border-color: ${style.strokeColor}; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; padding-left: ${style.spacingLeft}px;}`
+                                    });
+                                    const csscombo = comboCSS.join("\n");
+
+                                    fs.appendFile(cssComponent, `\n ${csscombo}`, function (err) {
+                                        // fs.appendFile(appComponent, `<a src="/src/app/${name}/${name}.component.html">${name}</a>`.toLowerCase(), function (err) {
+                                        if (err) throw err;
+                                        console.log(`comboBox style added`);
+                                    });
+
                                     break;
 
                                 default:
