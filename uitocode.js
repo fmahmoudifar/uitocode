@@ -1,8 +1,9 @@
 const fs = require('fs');
 const xmltojson = require('./xmltojson');
+const json = xmltojson.parser();
+
 const { execSync } = require('child_process');
 
-const json = xmltojson.parser();
 // console.log(json);
 // const xmltojson = require('./xmltojson');
 
@@ -86,8 +87,8 @@ function create() {
                     });
                 }
             });
-            let compTempName = name.toLowerCase();
-            fs.appendFile(appComponent, `\n<li><a routerLinkActive="active" routerLink="${compTempName}" >${name}</a></li>`, function (err) {
+            // let compTempName = toLowerCase(name);
+            fs.appendFile(appComponent, `\n<li><a routerLinkActive="active" routerLink="${name}" >${tempName}</a></li>`, function (err) {
                 if (err) throw err;
             });
 
@@ -156,7 +157,6 @@ function create() {
                                 const dashed = style.dashed === "0" ? "border-style: solid" : "";
                                 return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
                             });
-                            console.log(textboxHTML);
                             const textCSS = textboxCSS.join("\n");
 
                             fs.appendFile(cssComponent, `\n ${textCSS}`, function (err) {
