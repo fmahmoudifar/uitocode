@@ -58,8 +58,9 @@ function create() {
                 // console.log(htmlcomponent);
                 fs.readFile(htmlComponent, 'utf8', (err) => {
                     if (err) {
-                        execSync(`ng g c ${name}`, { stdio: 'inherit' });
-                        execSync(`ng generate module app-routing --route ${name} --module app.module`, { stdio: 'inherit' });
+                        // execSync(`ng g c ${name}`, { stdio: 'inherit' });
+                        // execSync(`ng generate module app-routing --route ${name} --module app.module`, { stdio: 'inherit' });
+                        execSync(`ng g module ${name} --route ${name} --module app.module`, { stdio: 'inherit' });
 
                         console.log(`Component ${name} Created Successfully`);
 
@@ -81,8 +82,8 @@ function create() {
                         });
                     }
                 });
-
-                fs.appendFile(appComponent, `\n<a routerLinkActive="active" routerLink="${name}" >${name}</a><br>`.toLowerCase(), function (err) {
+                let compTempName = name.toLowerCase();
+                fs.appendFile(appComponent, `\n<li><a routerLinkActive="active" routerLink="${compTempName}" >${name}</a></li>`, function (err) {
                     if (err) throw err;
                 });
 
