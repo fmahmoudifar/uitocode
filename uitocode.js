@@ -18,7 +18,6 @@ function create() {
             console.log('Installing Angular...');
             execSync('npm install -g @angular/cli --silent --skip-install', { stdio: 'inherit' });
         }
-
         const projectName = 'my-app';
 
         try {
@@ -27,8 +26,8 @@ function create() {
             console.log(`Changing directory ${projectName}...`);
             process.chdir(projectName);
 
-            // console.log(`Installing npm...`);
-            // execSync('npm i', { stdio: 'inherit' });
+            console.log(`Installing npm...`);
+            execSync('npm i', { stdio: 'inherit' });
         } catch (error) {
             console.log('Project already exist');
             console.log(`Changing directory ${projectName}...`);
@@ -264,7 +263,7 @@ function create() {
 
 function run() {
     console.log(`Running the application...`);
-    execSync('ng serve', { stdio: 'inherit' });
+    execSync('ng serve --open', { stdio: 'inherit' });
 }
 
 create().then(() => {

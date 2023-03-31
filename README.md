@@ -1,5 +1,10 @@
 # uitocode
 
-please run "npm install xml2js" first
+# Requirement:
 
-in order to run the app please run "node uitocode.js"
+NodeJS
+Install xml2js by running "npm install xml2js"
+
+# Run the App:
+
+"node uitocode.js"

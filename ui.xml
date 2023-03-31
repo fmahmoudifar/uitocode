@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mxfile host="app.diagrams.net" modified="2023-03-26T06:43:08.842Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="iLsdzYmSNRuCUSUBowJt" version="21.1.1" type="device" pages="3">
+<mxfile host="app.diagrams.net" modified="2023-03-27T16:34:06.408Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36" etag="wkz8O302_aCbjOzL7hGd" version="21.1.1" type="device" pages="3">
   <diagram name="signup" id="VUmCMJ5pngs0Y-7cKLuG">
     <mxGraphModel dx="794" dy="530" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -52,13 +52,13 @@
         <mxCell id="ZOz77_UTOwie6YPMPWQl-4" value="Sign In" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" parent="1" vertex="1">
           <mxGeometry x="350" y="310" width="150" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="lBhYvMO-ZHPUQIB92x7_-2" value="Forget Password" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+        <mxCell id="lBhYvMO-ZHPUQIB92x7_-2" value="Forget Password" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" parent="1" vertex="1">
           <mxGeometry x="350" y="400" width="150" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="lBhYvMO-ZHPUQIB92x7_-3" value="Link" style="shape=rectangle;strokeColor=none;fillColor=none;linkText=;fontSize=17;fontColor=#0000ff;fontStyle=4;html=1;align=center;" vertex="1" parent="1">
+        <mxCell id="lBhYvMO-ZHPUQIB92x7_-3" value="Link" style="shape=rectangle;strokeColor=none;fillColor=none;linkText=;fontSize=17;fontColor=#0000ff;fontStyle=4;html=1;align=center;" parent="1" vertex="1">
           <mxGeometry x="535" y="400" width="150" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="lBhYvMO-ZHPUQIB92x7_-4" value="Text" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="lBhYvMO-ZHPUQIB92x7_-4" value="Text" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="200" y="120" width="60" height="30" as="geometry" />
         </mxCell>
       </root>
@@ -69,8 +69,14 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="RbsYQ1YQIG10L2In5NOe-1" value="Button Text" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#2D7600;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#60a917;whiteSpace=wrap;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="300" y="190" width="150" height="50" as="geometry" />
+        <mxCell id="hVB-oBk0VwDJfF5eM9an-1" value="Button Text" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#6c8ebf;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#dae8fc;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="300" y="290" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hVB-oBk0VwDJfF5eM9an-2" value="Username" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.text.textBox;fontColor=#666666;align=left;fontSize=17;spacingLeft=4;spacingTop=-3;whiteSpace=wrap;strokeColor=#666666;mainText=" vertex="1" parent="1">
+          <mxGeometry x="300" y="80" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hVB-oBk0VwDJfF5eM9an-3" value="Password" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.text.textBox;fontColor=#666666;align=left;fontSize=17;spacingLeft=4;spacingTop=-3;whiteSpace=wrap;strokeColor=#666666;mainText=" vertex="1" parent="1">
+          <mxGeometry x="300" y="180" width="230" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
