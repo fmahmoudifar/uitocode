@@ -1,34 +1,12 @@
-// const fs = require('fs');
-// const xml2js = require('xml2js');
-
-// const xml = fs.readFileSync('ui.xml', 'utf8');
-
-// const parser = new xml2js.Parser();
-// let json = {};
-// parser.parseString(xml, function (err, result) {
-//     if (err) throw err;
-//     json = result;
-// });
-
-// fs.writeFile(__dirname + '/ui.json', JSON.stringify(json, null, 2), function (err) {
-//     if (err) throw err;
-//     console.log('Conversion ahs been completed!');
-// });
-
-
-
 const fs = require('fs');
 
-
 const xml2js = require('xml2js');
-
 
 let json = {};
 function parser() {
     const xml = fs.readFileSync('ui.xml', 'utf8');
 
     const parser = new xml2js.Parser();
-    // let json = {};
 
     parser.parseString(xml, function (err, result) {
         if (err) throw err;
@@ -43,6 +21,9 @@ function parser() {
                 acc[key] = value;
                 return acc;
             }, {});
+            if (Object.hasOwnProperty.call($.style, 'text') && !Object.hasOwnProperty.call($.style, 'shape')) {
+                $.style.shape = 'text';
+            }
         }
         component.mxCell?.forEach(cell => getStyle(cell));
     };
@@ -51,11 +32,6 @@ function parser() {
 
     return json;
 }
-// fs.writeFile(__dirname + '/ui.json', JSON.stringify(json, null, 2), function (err) {
-//     if (err) throw err;
-//     console.log('Conversion has been completed');
-// });
-// console.log(json);
 
 module.exports = {
     parser: parser

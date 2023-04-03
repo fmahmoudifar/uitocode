@@ -96,6 +96,7 @@ function create() {
                 const cells = tempCells.filter(cell => cell.$.style && cell.$.style.shape);
 
                 for (cell of cells) {
+                    // console.log(cell.$.style[0]);
                     switch (cell.$.style.shape) {
                         case "mxgraph.mockup.buttons.button":
                             let buttons = [];
@@ -120,8 +121,9 @@ function create() {
                                 const buttonStyle = style.buttonStyle === "round" ? "border-radius: 15px" : "";
                                 const dashed = style.dashed === "0" ? "border-style: solid" : "";
                                 const fontStyle = style.fontStyle === "1" ? "font-style: normal" : "";
+                                let font = style.fontFamily ? style.fontFamily : "Helvetica";
 
-                                return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; ${fontStyle}; border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}}`;
+                                return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family:${font}; ${fontStyle}; border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}}`;
                             });
                             const cssbutton = buttonCSS.join("\n");
 
@@ -154,11 +156,12 @@ function create() {
                                 const geometry = textbox.mxGeometry[0].$;
                                 const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
                                 const dashed = style.dashed === "0" ? "border-style: solid" : "";
-                                return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
+                                let font = style.fontFamily ? style.fontFamily : "Helvetica";
+                                return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; font-family:${font}; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
                             });
-                            const textCSS = textboxCSS.join("\n");
+                            const CSStextbox = textboxCSS.join("\n");
 
-                            fs.appendFile(cssComponent, `\n ${textCSS}`, function (err) {
+                            fs.appendFile(cssComponent, `\n ${CSStextbox}`, function (err) {
                                 if (err) throw err;
                                 console.log(`textbox style added`);
                             });
@@ -168,12 +171,8 @@ function create() {
                             let radios = [];
                             radios.push(cell);
                             const radioHTML = radios.map(radio => {
-                                const style = radio.$.style;
                                 const id = radio.$.id;
                                 const value = radio.$.value;
-                                const geometry = radio.mxGeometry[0].$;
-                                const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
-                                var x = parseInt(`${geometry.x}`) + 25;
                                 return `<input type="radio" name="${value}" id="${id}" value="${value}">
                                         <label for="${id}" id="${id}label">${value}</label>`
                             });
@@ -190,10 +189,12 @@ function create() {
                                 const value = radio.$.value;
                                 const geometry = radio.mxGeometry[0].$;
                                 const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
-                                var x = parseInt(`${geometry.x}`) + 25;
+                                var x = parseInt(`${geometry.x}`) + parseInt(`${geometry.width}`) + 10;
                                 const dashed = style.dashed === "0" ? "border-style: solid" : "";
+                                let font = style.fontFamily ? style.fontFamily : "Helvetica";
+
                                 return `#${id} {background-color: ${style.fillColor}; ${position} ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;}
-                                        #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor};}`
+                                        #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font};}`
                             });
                             const cssradio = radioCSS.join("\n");
 
@@ -207,13 +208,8 @@ function create() {
                             let combos = [];
                             combos.push(cell);
                             const comboHTML = combos.map(combo => {
-                                const style = combo.$.style;
                                 const id = combo.$.id;
                                 const value = combo.$.value;
-                                const geometry = combo.mxGeometry[0].$;
-                                const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
-                                var x = parseInt(`${geometry.x}`) + 25;
-                                const dashed = style.dashed === "0" ? "border-style: solid" : "";
                                 return `<select id="${id}"><option value="${value}">${value}</option></select>`;
                             });
                             const combo = comboHTML.join("\n");
@@ -231,7 +227,9 @@ function create() {
                                 const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
                                 var x = parseInt(`${geometry.x}`) + 25;
                                 const dashed = style.dashed === "0" ? "border-style: solid" : "";
-                                return `#${id} {${position} background-color: ${style.fillColor}; border-width: ${style.strokeWidth}px; ${dashed}; border-color: ${style.strokeColor}; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; padding-left: ${style.spacingLeft}px;}`
+                                let font = style.fontFamily ? style.fontFamily : "Helvetica";
+
+                                return `#${id} {${position} background-color: ${style.fillColor}; border-width: ${style.strokeWidth}px; ${dashed}; border-color: ${style.strokeColor}; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font}; padding-left: ${style.spacingLeft}px;}`
                             });
                             const csscombo = comboCSS.join("\n");
 
@@ -241,11 +239,118 @@ function create() {
                             });
                             break;
 
+                        case "mxgraph.mockup.forms.rrect":
+                            let checkboxes = [];
+                            checkboxes.push(cell);
+                            const checkboxHTML = checkboxes.map(elem => {
+                                const style = elem.$.style;
+                                const id = elem.$.id;
+                                const value = elem.$.value;
+                                return `<input type="checkbox" name="${value}" id="${id}" value="${value}">
+                                            <label for="${id}" id="${id}label">${value}</label>`
+                            });
+                            // const checkbox = checkboxHTML.join("\n");
+
+                            fs.appendFile(htmlComponent, `\n ${checkboxHTML.join("\n")}`, function (err) {
+                                if (err) throw err;
+                                console.log(`A checkbox added`);
+                            });
+
+                            const checkboxCSS = checkboxes.map(elem => {
+                                const style = elem.$.style;
+                                const id = elem.$.id;
+                                const value = elem.$.value;
+                                const geometry = elem.mxGeometry[0].$;
+                                const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
+                                var x = parseInt(`${geometry.x}`) + parseInt(`${geometry.width}`) + 10;
+                                const dashed = style.dashed === "0" ? "border-style: solid" : "";
+                                let font = style.fontFamily ? style.fontFamily : "Helvetica";
+
+                                return `#${id} {background-color: ${style.fillColor}; ${position} ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;}
+                                            #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font};}`
+                            });
+                            const csscheckbox = checkboxCSS.join("\n");
+
+                            fs.appendFile(cssComponent, `\n ${csscheckbox}`, function (err) {
+                                if (err) throw err;
+                                console.log(`Checkbox style added`);
+                            });
+                            break;
+
+                        case "rectangle":
+                            let links = [];
+                            links.push(cell);
+
+                            const linkHTML = links.map(elem => {
+                                const id = elem.$.id;
+                                const value = elem.$.value;
+                                return `<a href="" id="${id}">${value}</a>`;
+                            });
+                            const link = linkHTML.join("\n");
+
+                            fs.appendFile(htmlComponent, `\n ${link}`, function (err) {
+                                if (err) throw err;
+                                console.log(`A link added`);
+                            });
+
+                            const linkCSS = links.map(elem => {
+                                const style = elem.$.style;
+                                const id = elem.$.id;
+                                const value = elem.$.value;
+                                const geometry = elem.mxGeometry[0].$;
+                                const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
+                                const dashed = style.dashed === "0" ? "border-style: solid" : "";
+                                let font = style.fontFamily ? style.fontFamily : "Helvetica";
+                                return `#${id} { color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family: ${font}; ${position} }`;
+                            });
+                            const CSSlink = linkCSS.join("\n");
+
+                            fs.appendFile(cssComponent, `\n ${CSSlink}`, function (err) {
+                                if (err) throw err;
+                                console.log(`link style added`);
+                            });
+                            break;
+
+                        case "text":
+                            let texts = [];
+                            texts.push(cell);
+
+                            const textHTML = texts.map(elem => {
+                                const id = elem.$.id;
+                                const value = elem.$.value;
+                                return `<p id="${id}" >${value}</p>`;
+                            });
+                            const text = textHTML.join("\n");
+
+                            fs.appendFile(htmlComponent, `\n ${text}`, function (err) {
+                                if (err) throw err;
+                                console.log(`A text added`);
+                            });
+
+                            const textCSS = texts.map(elem => {
+                                const style = elem.$.style;
+                                const id = elem.$.id;
+                                const value = elem.$.value;
+                                const geometry = elem.mxGeometry[0].$;
+                                const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
+                                const dashed = style.dashed === "0" ? "border-style: solid" : "";
+                                let font = style.fontFamily ? style.fontFamily : "Helvetica";
+
+                                return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; font-family: ${font}; text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
+                            });
+                            const CSStext = textCSS.join("\n");
+
+                            fs.appendFile(cssComponent, `\n ${CSStext}`, function (err) {
+                                if (err) throw err;
+                                console.log(`text style added`);
+                            });
+                            break;
+
                         default:
                             break;
                     }
-                    // }
                 }
+                // }
                 // );
             }, 2000);
 
