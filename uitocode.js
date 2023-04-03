@@ -75,19 +75,23 @@ function create() {
                     // });
                 } else {
                     console.log(`Component ${name} already existed`);
-                    fs.writeFile(htmlComponent, ' ', (err) => {
+                    fs.writeFile(htmlComponent, '<html></html> ', (err) => {
                         if (err) throw err;
                         console.log(`Cleared out ${name}.component.html file successfully`);
                     });
 
-                    fs.writeFile(cssComponent, ' ', (err) => {
+                    // fs.writeFile(cssComponent, '', (err) => {
+                    fs.writeFile(cssComponent, `html { background-color: ${diagram.mxGraphModel[0].$.background}; width: ${diagram.mxGraphModel[0].$.pageWidth}px; height: ${diagram.mxGraphModel[0].$.pageHeight}px; } `, (err) => {
+
                         if (err) throw err;
                         console.log(`Cleared out ${name}.component.css file successfully`);
                     });
                 }
             });
             // let compTempName = toLowerCase(name);
-            fs.appendFile(appComponent, `\n<li><a routerLinkActive="active" routerLink="${name}" >${tempName}</a></li>`, function (err) {
+            // fs.appendFile(appComponent, `\n<li><a routerLinkActive="active" routerLink="${name}" >${tempName}</a></li>`, function (err) {
+            fs.appendFile(appComponent, ` >> <a routerLinkActive="active" routerLink="${name}" >${tempName}</a>   `, function (err) {
+
                 if (err) throw err;
             });
 
@@ -106,9 +110,9 @@ function create() {
                                 const value = button.$.value;
                                 return `<button id="${id}" >${value}</button>`;
                             });
-                            const button = buttonHTML.join("\n");
+                            // const button = buttonHTML.join("\n");
 
-                            fs.appendFile(htmlComponent, `\n ${button}`, function (err) {
+                            fs.appendFile(htmlComponent, `\n ${buttonHTML.join("\n")}`, function (err) {
                                 if (err) throw err;
                                 console.log(`A button added`);
                             });
@@ -125,9 +129,9 @@ function create() {
 
                                 return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family:${font}; ${fontStyle}; border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}}`;
                             });
-                            const cssbutton = buttonCSS.join("\n");
+                            // const cssbutton = buttonCSS.join("\n");
 
-                            fs.appendFile(cssComponent, `\n ${cssbutton}`, function (err) {
+                            fs.appendFile(cssComponent, `\n ${buttonCSS.join("\n")}`, function (err) {
                                 if (err) throw err;
                                 console.log(`button style added`);
                             });
@@ -142,9 +146,9 @@ function create() {
                                 const value = textbox.$.value;
                                 return `<input id="${id}" type="text" placeholder="${value}">`;
                             });
-                            const textbox = textboxHTML.join("\n");
+                            // const textbox = textboxHTML.join("\n");
 
-                            fs.appendFile(htmlComponent, `\n ${textbox}`, function (err) {
+                            fs.appendFile(htmlComponent, `\n ${textboxHTML.join("\n")}`, function (err) {
                                 if (err) throw err;
                                 console.log(`A textbox added`);
                             });
@@ -159,9 +163,9 @@ function create() {
                                 let font = style.fontFamily ? style.fontFamily : "Helvetica";
                                 return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; font-family:${font}; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
                             });
-                            const CSStextbox = textboxCSS.join("\n");
+                            // const CSStextbox = textboxCSS.join("\n");
 
-                            fs.appendFile(cssComponent, `\n ${CSStextbox}`, function (err) {
+                            fs.appendFile(cssComponent, `\n ${textboxCSS.join("\n")}`, function (err) {
                                 if (err) throw err;
                                 console.log(`textbox style added`);
                             });
@@ -176,9 +180,9 @@ function create() {
                                 return `<input type="radio" name="${value}" id="${id}" value="${value}">
                                         <label for="${id}" id="${id}label">${value}</label>`
                             });
-                            const radio = radioHTML.join("\n");
+                            // const radio = radioHTML.join("\n");
 
-                            fs.appendFile(htmlComponent, `\n ${radio}`, function (err) {
+                            fs.appendFile(htmlComponent, `\n ${radioHTML.join("\n")}`, function (err) {
                                 if (err) throw err;
                                 console.log(`A radio button added`);
                             });
@@ -196,9 +200,9 @@ function create() {
                                 return `#${id} {background-color: ${style.fillColor}; ${position} ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;}
                                         #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font};}`
                             });
-                            const cssradio = radioCSS.join("\n");
+                            // const cssradio = radioCSS.join("\n");
 
-                            fs.appendFile(cssComponent, `\n ${cssradio}`, function (err) {
+                            fs.appendFile(cssComponent, `\n ${radioCSS.join("\n")}`, function (err) {
                                 if (err) throw err;
                                 console.log(`radio button style added`);
                             });
@@ -212,9 +216,9 @@ function create() {
                                 const value = combo.$.value;
                                 return `<select id="${id}"><option value="${value}">${value}</option></select>`;
                             });
-                            const combo = comboHTML.join("\n");
+                            // const combo = comboHTML.join("\n");
 
-                            fs.appendFile(htmlComponent, `\n ${combo}`, function (err) {
+                            fs.appendFile(htmlComponent, `\n ${comboHTML.join("\n")}`, function (err) {
                                 if (err) throw err;
                                 console.log(`A comboBox added`);
                             });
@@ -231,9 +235,9 @@ function create() {
 
                                 return `#${id} {${position} background-color: ${style.fillColor}; border-width: ${style.strokeWidth}px; ${dashed}; border-color: ${style.strokeColor}; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font}; padding-left: ${style.spacingLeft}px;}`
                             });
-                            const csscombo = comboCSS.join("\n");
+                            // const csscombo = comboCSS.join("\n");
 
-                            fs.appendFile(cssComponent, `\n ${csscombo}`, function (err) {
+                            fs.appendFile(cssComponent, `\n ${comboCSS.join("\n")}`, function (err) {
                                 if (err) throw err;
                                 console.log(`comboBox style added`);
                             });
@@ -269,9 +273,9 @@ function create() {
                                 return `#${id} {background-color: ${style.fillColor}; ${position} ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;}
                                             #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font};}`
                             });
-                            const csscheckbox = checkboxCSS.join("\n");
+                            // const csscheckbox = checkboxCSS.join("\n");
 
-                            fs.appendFile(cssComponent, `\n ${csscheckbox}`, function (err) {
+                            fs.appendFile(cssComponent, `\n ${checkboxCSS.join("\n")}`, function (err) {
                                 if (err) throw err;
                                 console.log(`Checkbox style added`);
                             });
@@ -286,9 +290,9 @@ function create() {
                                 const value = elem.$.value;
                                 return `<a href="" id="${id}">${value}</a>`;
                             });
-                            const link = linkHTML.join("\n");
+                            // const link = linkHTML.join("\n");
 
-                            fs.appendFile(htmlComponent, `\n ${link}`, function (err) {
+                            fs.appendFile(htmlComponent, `\n ${linkHTML.join("\n")}`, function (err) {
                                 if (err) throw err;
                                 console.log(`A link added`);
                             });
@@ -303,9 +307,9 @@ function create() {
                                 let font = style.fontFamily ? style.fontFamily : "Helvetica";
                                 return `#${id} { color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family: ${font}; ${position} }`;
                             });
-                            const CSSlink = linkCSS.join("\n");
+                            // const CSSlink = linkCSS.join("\n");
 
-                            fs.appendFile(cssComponent, `\n ${CSSlink}`, function (err) {
+                            fs.appendFile(cssComponent, `\n ${linkCSS.join("\n")}`, function (err) {
                                 if (err) throw err;
                                 console.log(`link style added`);
                             });
@@ -320,9 +324,9 @@ function create() {
                                 const value = elem.$.value;
                                 return `<p id="${id}" >${value}</p>`;
                             });
-                            const text = textHTML.join("\n");
+                            // const text = textHTML.join("\n");
 
-                            fs.appendFile(htmlComponent, `\n ${text}`, function (err) {
+                            fs.appendFile(htmlComponent, `\n ${textHTML.join("\n")}`, function (err) {
                                 if (err) throw err;
                                 console.log(`A text added`);
                             });
@@ -338,9 +342,9 @@ function create() {
 
                                 return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; font-family: ${font}; text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
                             });
-                            const CSStext = textCSS.join("\n");
+                            // const CSStext = textCSS.join("\n");
 
-                            fs.appendFile(cssComponent, `\n ${CSStext}`, function (err) {
+                            fs.appendFile(cssComponent, `\n ${textCSS.join("\n")}`, function (err) {
                                 if (err) throw err;
                                 console.log(`text style added`);
                             });
