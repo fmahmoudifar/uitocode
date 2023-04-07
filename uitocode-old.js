@@ -105,9 +105,9 @@ function create() {
                         case "mxgraph.mockup.buttons.button":
                             let buttons = [];
                             buttons.push(cell);
-                            const buttonHTML = buttons.map(button => {
-                                const id = button.$.id;
-                                const value = button.$.value;
+                            const buttonHTML = buttons.map(elem => {
+                                const id = elem.$.id;
+                                const value = elem.$.value;
                                 return `<button id="${id}" >${value}</button>`;
                             });
                             // const button = buttonHTML.join("\n");
@@ -117,10 +117,10 @@ function create() {
                                 console.log(`A button added`);
                             });
 
-                            const buttonCSS = buttons.map(button => {
-                                const style = button.$.style;
-                                const id = button.$.id;
-                                const geometry = button.mxGeometry[0].$;
+                            const buttonCSS = buttons.map(elem => {
+                                const style = elem.$.style;
+                                const id = elem.$.id;
+                                const geometry = elem.mxGeometry[0].$;
                                 const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
                                 const buttonStyle = style.buttonStyle === "round" ? "border-radius: 15px" : "";
                                 const dashed = style.dashed === "0" ? "border-style: solid" : "";
@@ -141,9 +141,9 @@ function create() {
                             let textboxes = [];
                             textboxes.push(cell);
 
-                            const textboxHTML = textboxes.map(textbox => {
-                                const id = textbox.$.id;
-                                const value = textbox.$.value;
+                            const textboxHTML = textboxes.map(elem => {
+                                const id = elem.$.id;
+                                const value = elem.$.value;
                                 return `<input id="${id}" type="text" placeholder="${value}">`;
                             });
                             // const textbox = textboxHTML.join("\n");
@@ -153,11 +153,11 @@ function create() {
                                 console.log(`A textbox added`);
                             });
 
-                            const textboxCSS = textboxes.map(textbox => {
-                                const style = textbox.$.style;
-                                const id = textbox.$.id;
-                                const value = textbox.$.value;
-                                const geometry = textbox.mxGeometry[0].$;
+                            const textboxCSS = textboxes.map(elem => {
+                                const style = elem.$.style;
+                                const id = elem.$.id;
+                                const value = elem.$.value;
+                                const geometry = elem.mxGeometry[0].$;
                                 const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
                                 const dashed = style.dashed === "0" ? "border-style: solid" : "";
                                 let font = style.fontFamily ? style.fontFamily : "Helvetica";
@@ -174,9 +174,9 @@ function create() {
                         case "ellipse":
                             let radios = [];
                             radios.push(cell);
-                            const radioHTML = radios.map(radio => {
-                                const id = radio.$.id;
-                                const value = radio.$.value;
+                            const radioHTML = radios.map(elem => {
+                                const id = elem.$.id;
+                                const value = elem.$.value;
                                 return `<input type="radio" name="${value}" id="${id}" value="${value}">
                                         <label for="${id}" id="${id}label">${value}</label>`
                             });
@@ -187,11 +187,11 @@ function create() {
                                 console.log(`A radio button added`);
                             });
 
-                            const radioCSS = radios.map(radio => {
-                                const style = radio.$.style;
-                                const id = radio.$.id;
-                                const value = radio.$.value;
-                                const geometry = radio.mxGeometry[0].$;
+                            const radioCSS = radios.map(elem => {
+                                const style = elem.$.style;
+                                const id = elem.$.id;
+                                const value = elem.$.value;
+                                const geometry = elem.mxGeometry[0].$;
                                 const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
                                 var x = parseInt(`${geometry.x}`) + parseInt(`${geometry.width}`) + 10;
                                 const dashed = style.dashed === "0" ? "border-style: solid" : "";
@@ -211,9 +211,9 @@ function create() {
                         case "mxgraph.mockup.forms.comboBox":
                             let combos = [];
                             combos.push(cell);
-                            const comboHTML = combos.map(combo => {
-                                const id = combo.$.id;
-                                const value = combo.$.value;
+                            const comboHTML = combos.map(elem => {
+                                const id = elem.$.id;
+                                const value = elem.$.value;
                                 return `<select id="${id}"><option value="${value}">${value}</option></select>`;
                             });
                             // const combo = comboHTML.join("\n");
@@ -223,11 +223,11 @@ function create() {
                                 console.log(`A comboBox added`);
                             });
 
-                            const comboCSS = combos.map(combo => {
-                                const style = combo.$.style;
-                                const id = combo.$.id;
-                                const value = combo.$.value;
-                                const geometry = combo.mxGeometry[0].$;
+                            const comboCSS = combos.map(elem => {
+                                const style = elem.$.style;
+                                const id = elem.$.id;
+                                const value = elem.$.value;
+                                const geometry = elem.mxGeometry[0].$;
                                 const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
                                 var x = parseInt(`${geometry.x}`) + 25;
                                 const dashed = style.dashed === "0" ? "border-style: solid" : "";
