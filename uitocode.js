@@ -30,13 +30,9 @@ function install() {
         process.chdir(projectName);
         fs.writeFile(appComponent, ' ', (err) => {
             if (err) throw err;
-            console.log('Cleared out app.component.html file successfully');
+            console.log('Cleared out app.component.html');
         });
-
     }
-
-    // return Promise.resolve();
-
 }
 
 function create() {
@@ -64,24 +60,21 @@ function create() {
             function setComponent() {
                 fs.writeFile(htmlComponent, '<html></html> ', (err) => {
                     if (err) throw err;
-                    console.log(`Cleared out ${name}.component.html file successfully`);
+                    console.log(`Cleared out ${name}.component.html`);
                 });
                 fs.writeFile(cssComponent, `html { background-color: ${diagram.mxGraphModel[0].$.background}; width: ${diagram.mxGraphModel[0].$.pageWidth}px; height: ${diagram.mxGraphModel[0].$.pageHeight}px; } `, (err) => {
                     if (err) throw err;
-                    console.log(`Cleared out ${name}.component.css file successfully`);
+                    console.log(`Cleared out ${name}.component.css`);
                 });
                 fs.appendFile(appComponent, ` >> <a routerLinkActive="active" routerLink="${name}" >${tempName}</a>   `, function (err) {
                     if (err) throw err;
                 });
             }
-            // return new Promise(resolve => setTimeout(resolve, 1000));
-
         }
-        // setTimeout(function () {
 
         function createElement() {
-            const tempCells = diagram.mxGraphModel[0].root[0].mxCell;
-            const cells = tempCells.filter(cell => cell.$.style && cell.$.style.shape);
+            // const tempCells = diagram.mxGraphModel[0].root[0].mxCell;
+            const cells = diagram.mxGraphModel[0].root[0].mxCell.filter(cell => cell.$.style && cell.$.style.shape);
 
             for (cell of cells) {
                 const style = cell.$.style;
@@ -89,12 +82,36 @@ function create() {
                 const value = cell.$.value;
                 const geometry = cell.mxGeometry[0].$;
                 const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
-                var x = parseInt(`${geometry.x}`) + parseInt(`${geometry.width}`) + 10;
-                var xx = parseInt(`${geometry.x}`) + 25;
+                let x = parseInt(`${geometry.x}`) + parseInt(`${geometry.width}`) + 10;
+                let xx = parseInt(`${geometry.x}`) + 25;
                 const buttonStyle = style.buttonStyle === "round" ? "border-radius: 15px" : "";
                 const dashed = style.dashed === "0" ? "border-style: solid" : "";
-                const fontStyle = style.fontStyle === "1" ? "font-weight: bold" : "font-style: normal";
                 let font = style.fontFamily ? style.fontFamily : "Helvetica";
+                let fontStyle = "";
+
+                switch (style.fontStyle) {
+                    case "1":
+                        fontStyle = "font-weight: bold;";
+                        break;
+                    case "2":
+                        fontStyle = "font-style: italic;";
+                        break;
+                    case "3":
+                        fontStyle = "font-weight: bold; font-style: italic;";
+                        break;
+                    case "4":
+                        fontStyle = "text-decoration: underline;";
+                        break;
+                    case "5":
+                        fontStyle = "font-weight: bold; text-decoration: underline;";
+                        break;
+                    case "6":
+                        fontStyle = "font-style: italic; text-decoration: underline;";
+                        break;
+                    default:
+                        fontStyle = "font-style: normal;";
+                        break;
+                };
 
                 switch (cell.$.style.shape) {
                     case "mxgraph.mockup.buttons.button":
@@ -105,8 +122,7 @@ function create() {
                             console.log(`A button added`);
                         });
 
-                        console.log(`#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family:${font}; ${fontStyle}; border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}}`);
-                        const buttonCSS = `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family:${font}; ${fontStyle}; border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}}`;
+                        const buttonCSS = `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family:${font}; ${fontStyle} border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}}`;
                         fs.appendFile(cssComponent, `\n ${buttonCSS}`, function (err) {
                             if (err) throw err;
                             console.log(`button style added`);
@@ -122,7 +138,7 @@ function create() {
                             console.log(`A textbox added`);
                         });
 
-                        const textboxCSS = `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; font-family:${font}; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
+                        const textboxCSS = `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; font-family:${font}; ${fontStyle} padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
                         fs.appendFile(cssComponent, `\n ${textboxCSS}`, function (err) {
                             if (err) throw err;
                             console.log(`textbox style added`);
@@ -139,7 +155,7 @@ function create() {
                         });
 
                         const radioCSS = `#${id} {background-color: ${style.fillColor}; ${position} ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;}
-                                    #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font};}`;
+                                    #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font}; ${fontStyle}}`;
 
                         fs.appendFile(cssComponent, `\n ${radioCSS}`, function (err) {
                             if (err) throw err;
@@ -156,7 +172,7 @@ function create() {
                             console.log(`A comboBox added`);
                         });
 
-                        const comboCSS = `#${id} {${position} background-color: ${style.fillColor}; border-width: ${style.strokeWidth}px; ${dashed}; border-color: ${style.strokeColor}; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font}; padding-left: ${style.spacingLeft}px;}`;
+                        const comboCSS = `#${id} {${position} background-color: ${style.fillColor}; border-width: ${style.strokeWidth}px; ${dashed}; border-color: ${style.strokeColor}; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font}; ${fontStyle} padding-left: ${style.spacingLeft}px;}`;
                         fs.appendFile(cssComponent, `\n ${comboCSS}`, function (err) {
                             if (err) throw err;
                             console.log(`comboBox style added`);
@@ -174,7 +190,7 @@ function create() {
                         });
 
                         const checkboxCSS = `#${id} {background-color: ${style.fillColor}; ${position} ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;}
-                                        #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font};}`;
+                                        #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font}; ${fontStyle}}`;
                         fs.appendFile(cssComponent, `\n ${checkboxCSS}`, function (err) {
                             if (err) throw err;
                             console.log(`Checkbox style added`);
@@ -190,7 +206,7 @@ function create() {
                             console.log(`A link added`);
                         });
 
-                        const linkCSS = `#${id} { color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family: ${font}; ${position} }`;
+                        const linkCSS = `#${id} { color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family: ${font}; ${fontStyle} ${position} }`;
                         fs.appendFile(cssComponent, `\n ${linkCSS}`, function (err) {
                             if (err) throw err;
                             console.log(`link style added`);
@@ -206,7 +222,7 @@ function create() {
                             console.log(`A text added`);
                         });
 
-                        const textCSS = `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; font-family: ${font}; text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
+                        const textCSS = `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; font-family: ${font}; ${fontStyle} text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
 
                         fs.appendFile(cssComponent, `\n ${textCSS}`, function (err) {
                             if (err) throw err;
@@ -227,7 +243,6 @@ function create() {
 
     }
     setTimeout(function () {
-        // return resolve();
         run();
     }, 3000);
 }
