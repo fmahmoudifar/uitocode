@@ -1,16 +1,11 @@
 const fs = require('fs');
 const xmltojson = require('./xmltojson');
 const json = xmltojson.parser();
-
 const { execSync } = require('child_process');
 
-// function main() {
-//     return new Promise(resolve => {
-//         console.log("install");
-//         resolve();
-//     })
-
-// }
+const projectName = 'my-app';
+const appComponent = `../${projectName}/src/app/app.component.html`;
+const text = '<router-outlet></router-outlet>';
 
 function install() {
     try {
@@ -21,7 +16,6 @@ function install() {
         execSync('npm install -g @angular/cli --silent --skip-install', { stdio: 'inherit' });
     }
 
-    const projectName = 'my-app';
 
     try {
         execSync(`ng new ${projectName} --routing=true --style=css --skip-git`, { stdio: 'inherit' });
@@ -34,13 +28,12 @@ function install() {
         process.chdir(projectName);
     }
 
-    const appComponent = `../${projectName}/src/app/app.component.html`;
-    const text = '<router-outlet></router-outlet>';
-
-    fs.writeFile(appComponent, text, (err) => {
+    fs.writeFile(appComponent, ' ', (err) => {
         if (err) throw err;
         console.log('Cleared out app.component.html file successfully');
     });
+
+    return Promise.resolve();
 
 }
 
@@ -61,22 +54,23 @@ function create() {
                     console.log(`Component ${name} Created Successfully`);
                 } else {
                     console.log(`Component ${name} already existed`);
-                    fs.writeFile(htmlComponent, '<html></html> ', (err) => {
-                        if (err) throw err;
-                        console.log(`Cleared out ${name}.component.html file successfully`);
-                    });
-                    fs.writeFile(cssComponent, `html { background-color: ${diagram.mxGraphModel[0].$.background}; width: ${diagram.mxGraphModel[0].$.pageWidth}px; height: ${diagram.mxGraphModel[0].$.pageHeight}px; } `, (err) => {
-                        if (err) throw err;
-                        console.log(`Cleared out ${name}.component.css file successfully`);
-                    });
                 }
             });
-            setTimeout(function () {
-                fs.appendFile(appComponent, ` >> <a routerLinkActive="active" routerLink="${name}" >${tempName}</a>   `, function (err) {
-                    if (err) throw err;
-                });
-            }, 1000);
+            fs.writeFile(htmlComponent, '<html></html> ', (err) => {
+                if (err) throw err;
+                console.log(`Cleared out ${name}.component.html file successfully`);
+            });
+            fs.writeFile(cssComponent, `html { background-color: ${diagram.mxGraphModel[0].$.background}; width: ${diagram.mxGraphModel[0].$.pageWidth}px; height: ${diagram.mxGraphModel[0].$.pageHeight}px; } `, (err) => {
+                if (err) throw err;
+                console.log(`Cleared out ${name}.component.css file successfully`);
+            });
+            fs.appendFile(appComponent, ` >> <a routerLinkActive="active" routerLink="${name}" >${tempName}</a>   `, function (err) {
+                if (err) throw err;
+            });
+            // return new Promise(resolve => setTimeout(resolve, 1000));
+
         }
+        // setTimeout(function () {
 
         function createElement() {
             const tempCells = diagram.mxGraphModel[0].root[0].mxCell;
@@ -92,7 +86,6 @@ function create() {
                             const value = elem.$.value;
                             return `<button id="${id}" >${value}</button>`;
                         });
-                        // const button = buttonHTML.join("\n");
 
                         fs.appendFile(htmlComponent, `\n ${buttonHTML.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -111,7 +104,6 @@ function create() {
 
                             return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family:${font}; ${fontStyle}; border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}}`;
                         });
-                        // const cssbutton = buttonCSS.join("\n");
 
                         fs.appendFile(cssComponent, `\n ${buttonCSS.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -128,7 +120,6 @@ function create() {
                             const value = elem.$.value;
                             return `<input id="${id}" type="text" placeholder="${value}">`;
                         });
-                        // const textbox = textboxHTML.join("\n");
 
                         fs.appendFile(htmlComponent, `\n ${textboxHTML.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -145,7 +136,6 @@ function create() {
                             let font = style.fontFamily ? style.fontFamily : "Helvetica";
                             return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; font-family:${font}; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
                         });
-                        // const CSStextbox = textboxCSS.join("\n");
 
                         fs.appendFile(cssComponent, `\n ${textboxCSS.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -162,7 +152,6 @@ function create() {
                             return `<input type="radio" name="${value}" id="${id}" value="${value}">
                                     <label for="${id}" id="${id}label">${value}</label>`
                         });
-                        // const radio = radioHTML.join("\n");
 
                         fs.appendFile(htmlComponent, `\n ${radioHTML.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -182,7 +171,6 @@ function create() {
                             return `#${id} {background-color: ${style.fillColor}; ${position} ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;}
                                     #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font};}`
                         });
-                        // const cssradio = radioCSS.join("\n");
 
                         fs.appendFile(cssComponent, `\n ${radioCSS.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -198,7 +186,6 @@ function create() {
                             const value = elem.$.value;
                             return `<select id="${id}"><option value="${value}">${value}</option></select>`;
                         });
-                        // const combo = comboHTML.join("\n");
 
                         fs.appendFile(htmlComponent, `\n ${comboHTML.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -217,7 +204,6 @@ function create() {
 
                             return `#${id} {${position} background-color: ${style.fillColor}; border-width: ${style.strokeWidth}px; ${dashed}; border-color: ${style.strokeColor}; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font}; padding-left: ${style.spacingLeft}px;}`
                         });
-                        // const csscombo = comboCSS.join("\n");
 
                         fs.appendFile(cssComponent, `\n ${comboCSS.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -235,7 +221,6 @@ function create() {
                             return `<input type="checkbox" name="${value}" id="${id}" value="${value}">
                                         <label for="${id}" id="${id}label">${value}</label>`
                         });
-                        // const checkbox = checkboxHTML.join("\n");
 
                         fs.appendFile(htmlComponent, `\n ${checkboxHTML.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -255,7 +240,6 @@ function create() {
                             return `#${id} {background-color: ${style.fillColor}; ${position} ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;}
                                         #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font};}`
                         });
-                        // const csscheckbox = checkboxCSS.join("\n");
 
                         fs.appendFile(cssComponent, `\n ${checkboxCSS.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -272,7 +256,6 @@ function create() {
                             const value = elem.$.value;
                             return `<a href="" id="${id}">${value}</a>`;
                         });
-                        // const link = linkHTML.join("\n");
 
                         fs.appendFile(htmlComponent, `\n ${linkHTML.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -289,7 +272,6 @@ function create() {
                             let font = style.fontFamily ? style.fontFamily : "Helvetica";
                             return `#${id} { color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family: ${font}; ${position} }`;
                         });
-                        // const CSSlink = linkCSS.join("\n");
 
                         fs.appendFile(cssComponent, `\n ${linkCSS.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -306,7 +288,6 @@ function create() {
                             const value = elem.$.value;
                             return `<p id="${id}" >${value}</p>`;
                         });
-                        // const text = textHTML.join("\n");
 
                         fs.appendFile(htmlComponent, `\n ${textHTML.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -324,7 +305,6 @@ function create() {
 
                             return `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; font-family: ${font}; text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
                         });
-                        // const CSStext = textCSS.join("\n");
 
                         fs.appendFile(cssComponent, `\n ${textCSS.join("\n")}`, function (err) {
                             if (err) throw err;
@@ -336,27 +316,49 @@ function create() {
                         break;
                 }
             }
+            fs.appendFile(appComponent, text, (err) => {
+                if (err) throw err;
+                console.log('Set app.component.html file successfully');
+                setTimeout(function () {
+                    // return resolve();
+                    run();
+                }, 3000);
+            });
             // }
             // );
-        }
+            // return new Promise(resolve => setTimeout(resolve, 1000));
 
+        }
+        // }, 1000);
+        // function createPage() {
+        //     createCompoennt()
+        //         .then(createElement);
+
+        // }
+        // createPage();
         createCompoennt();
         createElement();
 
     }
+    // resolve();
+    // return new Promise(resolve => setTimeout(resolve, 1000));
+
 }
 
 function run() {
     console.log(`Running the application...`);
     execSync('ng serve --open', { stdio: 'inherit' });
+    // return new Promise(resolve => setTimeout(resolve, 1000));
 }
 
-function execute() {
-    install()
-        .then(create)
-        .then(run);
 
-}
+install();
 
-execute();
+setTimeout(function () {
+    // create().then(() => {
+    //     run();
+    // });
+    create();
+
+}, 1000);
 
