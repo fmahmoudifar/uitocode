@@ -73,7 +73,6 @@ function create() {
         }
 
         function createElement() {
-            // const tempCells = diagram.mxGraphModel[0].root[0].mxCell;
             const cells = diagram.mxGraphModel[0].root[0].mxCell.filter(cell => cell.$.style && cell.$.style.shape);
 
             for (cell of cells) {
@@ -83,7 +82,6 @@ function create() {
                 const geometry = cell.mxGeometry[0].$;
                 const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
                 let x = parseInt(`${geometry.x}`) + parseInt(`${geometry.width}`) + 10;
-                let xx = parseInt(`${geometry.x}`) + 25;
                 const buttonStyle = style.buttonStyle === "round" ? "border-radius: 15px" : "";
                 const dashed = style.dashed === "0" ? "border-style: solid" : "";
                 let font = style.fontFamily ? style.fontFamily : "Helvetica";
