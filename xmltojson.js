@@ -24,6 +24,9 @@ function parser() {
             if (Object.hasOwnProperty.call($.style, 'text') && !Object.hasOwnProperty.call($.style, 'shape')) {
                 $.style.shape = 'text';
             }
+            if (!Object.hasOwnProperty.call($.style, 'text') && !Object.hasOwnProperty.call($.style, 'shape')) {
+                $.style.shape = 'div';
+            }
         }
         component.mxCell?.forEach(cell => getStyle(cell));
     };

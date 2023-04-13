@@ -37,6 +37,7 @@ function install() {
 
 function create() {
     const diagrams = json.mxfile.diagram;
+    // console.log(diagrams);
 
     for (const diagram of diagrams) {
         const tempName = diagram.$.name;
@@ -76,14 +77,17 @@ function create() {
             const cells = diagram.mxGraphModel[0].root[0].mxCell.filter(cell => cell.$.style && cell.$.style.shape);
 
             for (cell of cells) {
+                // console.log(cell);
                 const style = cell.$.style;
                 const id = cell.$.id;
                 const value = cell.$.value;
                 const geometry = cell.mxGeometry[0].$;
                 const position = `position:absolute; left:${geometry.x}px; top:${geometry.y}px; width:${geometry.width}px; height:${geometry.height}px;`;
+                const y = parseInt(`${geometry.y}`) + 10;
+                const linkPosition = `position:absolute; left:${geometry.x}px; top:${y}px; width:${geometry.width}px; height:${geometry.height}px;`;
                 let x = parseInt(`${geometry.x}`) + parseInt(`${geometry.width}`) + 10;
                 const buttonStyle = style.buttonStyle === "round" ? "border-radius: 15px" : "";
-                const dashed = style.dashed === "0" ? "border-style: solid" : "";
+                let dashed = style.dashed === "0" ? "border-style: solid;" : "";
                 let font = style.fontFamily ? style.fontFamily : "Helvetica";
                 let fontStyle = "";
 
@@ -114,13 +118,13 @@ function create() {
                 switch (cell.$.style.shape) {
                     case "mxgraph.mockup.buttons.button":
 
-                        const buttonHTML = `<button id="${id}" >${value}</button>`;
+                        const buttonHTML = `<button id="a${id}" >${value}</button>`;
                         fs.appendFile(htmlComponent, `\n ${buttonHTML}`, function (err) {
                             if (err) throw err;
                             console.log(`A button added`);
                         });
 
-                        const buttonCSS = `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family:${font}; ${fontStyle} border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}}`;
+                        const buttonCSS = `#a${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed} text-align: ${style.align}; background-color: ${style.fillColor}; color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family:${font}; ${fontStyle} border-color: ${style.strokeColor}; ${buttonStyle}; white-space: ${style.whiteSpace}; ${position}}`;
                         fs.appendFile(cssComponent, `\n ${buttonCSS}`, function (err) {
                             if (err) throw err;
                             console.log(`button style added`);
@@ -130,13 +134,13 @@ function create() {
 
                     case "mxgraph.mockup.text.textBox":
 
-                        const textboxHTML = `<input id="${id}" type="text" placeholder="${value}">`;
+                        const textboxHTML = `<input id="a${id}" type="text" placeholder="${value}">`;
                         fs.appendFile(htmlComponent, `\n ${textboxHTML}`, function (err) {
                             if (err) throw err;
                             console.log(`A textbox added`);
                         });
 
-                        const textboxCSS = `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; font-family:${font}; ${fontStyle} padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
+                        const textboxCSS = `#a${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed} color: ${style.fontColor}; text-align: ${style.align}; font-size: ${style.fontSize}px; font-family:${font}; ${fontStyle} padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
                         fs.appendFile(cssComponent, `\n ${textboxCSS}`, function (err) {
                             if (err) throw err;
                             console.log(`textbox style added`);
@@ -146,14 +150,14 @@ function create() {
 
                     case "ellipse":
 
-                        const radioHTML = `<input type="radio" name="${value}" id="${id}" value="${value}"><label for="${id}" id="${id}label">${value}</label>`;
+                        const radioHTML = `<input type="radio" name="${value}" id="a${id}" value="${value}"><label for="a${id}" id="a${id}label">${value}</label>`;
                         fs.appendFile(htmlComponent, `\n ${radioHTML}`, function (err) {
                             if (err) throw err;
                             console.log(`A radio button added`);
                         });
 
-                        const radioCSS = `#${id} {background-color: ${style.fillColor}; ${position} ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;}
-                                    #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font}; ${fontStyle}}`;
+                        const radioCSS = `#a${id} {background-color: ${style.fillColor}; ${position} ${dashed} border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;}
+                                    #a${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font}; ${fontStyle}}`;
 
                         fs.appendFile(cssComponent, `\n ${radioCSS}`, function (err) {
                             if (err) throw err;
@@ -164,13 +168,13 @@ function create() {
 
                     case "mxgraph.mockup.forms.comboBox":
 
-                        const comboHTML = `<select id="${id}"><option value="${value}">${value}</option></select>`;
+                        const comboHTML = `<select id="a${id}"><option value="${value}">${value}</option></select>`;
                         fs.appendFile(htmlComponent, `\n ${comboHTML}`, function (err) {
                             if (err) throw err;
                             console.log(`A comboBox added`);
                         });
 
-                        const comboCSS = `#${id} {${position} background-color: ${style.fillColor}; border-width: ${style.strokeWidth}px; ${dashed}; border-color: ${style.strokeColor}; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font}; ${fontStyle} padding-left: ${style.spacingLeft}px;}`;
+                        const comboCSS = `#a${id} {${position} border-width: ${style.strokeWidth}px; ${dashed} border-color: ${style.strokeColor}; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font}; ${fontStyle} padding-left: ${style.spacingLeft}px;}`;
                         fs.appendFile(cssComponent, `\n ${comboCSS}`, function (err) {
                             if (err) throw err;
                             console.log(`comboBox style added`);
@@ -180,15 +184,15 @@ function create() {
 
                     case "mxgraph.mockup.forms.rrect":
 
-                        const checkboxHTML = `<input type="checkbox" name="${value}" id="${id}" value="${value}">
-                                        <label for="${id}" id="${id}label">${value}</label>`
+                        const checkboxHTML = `<input type="checkbox" name="${value}" id="a${id}" value="${value}">
+                                        <label for="a${id}" id="a${id}label">${value}</label>`
                         fs.appendFile(htmlComponent, `\n ${checkboxHTML}`, function (err) {
                             if (err) throw err;
                             console.log(`A checkbox added`);
                         });
 
-                        const checkboxCSS = `#${id} {background-color: ${style.fillColor}; ${position} ${dashed}; border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;}
-                                        #${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font}; ${fontStyle}}`;
+                        const checkboxCSS = `#a${id} {background-color: ${style.fillColor}; ${position} ${dashed} border-color: ${style.strokeColor}; padding-left: ${style.spacingLeft}px;}
+                                        #a${id}label {position: absolute; left: ${x}px; top: ${geometry.y}px; text-align: left; font-size: ${style.fontSize}px; color: ${style.fontColor}; font-family:${font}; ${fontStyle}}`;
                         fs.appendFile(cssComponent, `\n ${checkboxCSS}`, function (err) {
                             if (err) throw err;
                             console.log(`Checkbox style added`);
@@ -198,13 +202,13 @@ function create() {
 
                     case "rectangle":
 
-                        const linkHTML = `<a href="" id="${id}">${value}</a>`;
+                        const linkHTML = `<a href="" id="a${id}">${value}</a>`;
                         fs.appendFile(htmlComponent, `\n ${linkHTML}`, function (err) {
                             if (err) throw err;
                             console.log(`A link added`);
                         });
 
-                        const linkCSS = `#${id} { color: ${style.fontColor}; font-size: ${style.fontSize}px; font-family: ${font}; ${fontStyle} ${position} }`;
+                        const linkCSS = `#a${id} { color: ${style.fontColor}; font-size: ${style.fontSize}px; text-align: ${style.align}; vertical-align: ${style.verticalAlign}; font-family: ${font}; ${fontStyle} ${linkPosition} }`;
                         fs.appendFile(cssComponent, `\n ${linkCSS}`, function (err) {
                             if (err) throw err;
                             console.log(`link style added`);
@@ -214,17 +218,42 @@ function create() {
 
                     case "text":
 
-                        const textHTML = `<p id="${id}" >${value}</p>`;
+                        const textHTML = `<p id="a${id}" >${value}</p>`;
                         fs.appendFile(htmlComponent, `\n ${textHTML}`, function (err) {
                             if (err) throw err;
                             console.log(`A text added`);
                         });
 
-                        const textCSS = `#${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; ${dashed}; color: ${style.fontColor}; font-family: ${font}; ${fontStyle} text-align: ${style.align}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
+                        const textCSS = `#a${id} {border-width: ${style.strokeWidth}px; box-shadow: ${style.shadow}; color: ${style.fontColor}; font-family: ${font}; ${fontStyle} text-align: ${style.align}; vertical-align: ${style.verticalAlign}; font-size: ${style.fontSize}px; padding-left: ${style.spacingLeft}px; padding-top: ${style.spacingTop}px; border-color: ${style.strokeColor}; ${position} box-sizing: border-box;}`;
 
                         fs.appendFile(cssComponent, `\n ${textCSS}`, function (err) {
                             if (err) throw err;
                             console.log(`text style added`);
+                        });
+
+                        break;
+
+                    case "div":
+                        if (!style.strokeWidth) {
+                            style.strokeWidth = 1;
+                        }
+                        if (!style.strokeColor) {
+                            style.strokeColor = '#000000';
+                        }
+                        if (!dashed) {
+                            dashed = "border-style: solid;";
+                        }
+                        const divHTML = `<div id="a${id}" >${value}</div>`;
+                        fs.appendFile(htmlComponent, `\n ${divHTML}`, function (err) {
+                            if (err) throw err;
+                            console.log(`A div added`);
+                        });
+
+                        const divCSS = `#a${id} {border-width: ${style.strokeWidth}px; ${dashed} background-color: ${style.fillColor}; border-color: ${style.strokeColor}; ${position} }`;
+
+                        fs.appendFile(cssComponent, `\n ${divCSS}`, function (err) {
+                            if (err) throw err;
+                            console.log(`div style added`);
                         });
 
                         break;
@@ -237,12 +266,12 @@ function create() {
         createCompoennt();
         setTimeout(function () {
             createElement();
-        }, 1000);
+        }, 2000);
 
     }
     setTimeout(function () {
         run();
-    }, 3000);
+    }, 10000);
 }
 
 function run() {
