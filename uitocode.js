@@ -86,7 +86,7 @@ function create() {
                 const y = parseInt(`${geometry.y}`) + 10;
                 const linkPosition = `position:absolute; left:${geometry.x}px; top:${y}px; width:${geometry.width}px; height:${geometry.height}px;`;
                 let x = parseInt(`${geometry.x}`) + parseInt(`${geometry.width}`) + 10;
-                const buttonStyle = style.buttonStyle === "round" ? "border-radius: 15px" : "";
+                const buttonStyle = style.buttonStyle === "round" ? "border-radius: 10px" : "";
                 let dashed = style.dashed === "0" ? "border-style: solid;" : "";
                 let font = style.fontFamily ? style.fontFamily : "Helvetica";
                 let fontStyle = "";
