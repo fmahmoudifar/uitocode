@@ -59,10 +59,11 @@ function create() {
             });
 
             function setComponent() {
-                fs.writeFile(htmlComponent, '<html></html> ', (err) => {
-                    if (err) throw err;
-                    console.log(`Cleared out ${name}.component.html`);
-                });
+                fs.writeFile(htmlComponent, `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta http-equiv="X-UA-Compatible" content="IE=edge">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>${name}</title>\n</head>\n<body>\n`,
+                    (err) => {
+                        if (err) throw err;
+                        console.log(`Cleared out ${name}.component.html`);
+                    });
                 fs.writeFile(cssComponent, `html { background-color: ${diagram.mxGraphModel[0].$.background}; width: ${diagram.mxGraphModel[0].$.pageWidth}px; height: ${diagram.mxGraphModel[0].$.pageHeight}px; } `, (err) => {
                     if (err) throw err;
                     console.log(`Cleared out ${name}.component.css`);
@@ -261,12 +262,22 @@ function create() {
                     default:
                         break;
                 }
+
+
+
             }
+            setTimeout(function () {
+                fs.appendFile(htmlComponent, `\n</body>\n</html>`, function (err) {
+                    if (err) throw err;
+                });
+            }, 2000);
         }
         createCompoennt();
         setTimeout(function () {
             createElement();
         }, 2000);
+
+
 
     }
     setTimeout(function () {
